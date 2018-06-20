@@ -1,1 +1,51 @@
-/* You can add global styles to this file, and also import other style files */
+/* Add application styles & imports to this file! */
+html, body {
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.main {
+  padding-top: 56px;
+}
+.mdc-card {
+  height: calc(100vh - 56px);
+}
+.mdc-card__primary-action {
+  height: 100vh;
+}
+.mdc-card__action-buttons {
+  width: 100%;
+}
+.demo-list {
+  overflow-y: auto;
+}
+#user-pic, .pic {
+  height: 1.5rem;
+  width: 1.5rem;
+  background-position: center center;
+  background-size: cover;
+  margin-right: 0.5rem;
+}
+#mediaCapture {
+  display: none;
+}
+.thumb {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 300px;
+  margin-bottom: 1rem;
+}
+.thumb img {
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+}
+@media only screen and (min-width: 600px) {
+  .main {
+    padding-top: 64px;
+  }
+  .mdc-card {
+    height: calc(100vh - 64px);
+  }
+}
+

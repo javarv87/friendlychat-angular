@@ -1,20 +1,54 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<header class="mdc-top-app-bar mdc-top-app-bar">
+  <div class="mdc-top-app-bar__row">
+    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+      <span class="mdc-top-app-bar__title">Friendly Chat</span>
+    </section>
+    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+      <button *ngIf="!currentUser" (click)="login()" class="material-icons mdc-top-app-bar__action-item">account_circle</button>
+      <div *ngIf="currentUser" id="user-pic" [ngStyle]="profilePicStyles"></div>
+      {{ (currentUser) ? (user | async)?.displayName : 'Iniciar Sesión' }}
+      <button *ngIf="currentUser" (click)="logout()" class="material-icons mdc-top-app-bar__action-item">close</button>
+    </section>
+  </div>
+</header>
 
+<main class="main" *ngIf="currentUser">
+  <div class="mdc-card">
+    <div class="mdc-card__primary-action">
+      <ul #demoList id="demo-list" class="mdc-list demo-list mdc-list--two-line mdc-list--avatar-list">
+        <div *ngFor="let message of messages | async">
+          <li class="mdc-list-item">
+            <span *ngIf="!message?.photoUrl" class="mdc-list-item__graphic material-icons" aria-hidden="true">account_circle</span>
+            <div *ngIf="message?.photoUrl" class="pic" [style.background-image]="'url(' + message.photoUrl + ')'"></div>
+            <span class="mdc-list-item__text">
+              <span class="mdc-list-item__secondary-text">{{ message.name }}</span>
+              {{ message.text }}
+            </span>
+          </li>
+          <div class="thumb mdc-elevation--z2">
+            <img *ngIf="message.imageUrl" [src]="message.imageUrl + (message.moderated ? '&amp;moderated=1' : '')">
+          </div>
+          <li class="mdc-list-divider" role="separator"></li>
+        </div>
+      </ul>
+    </div>
+
+    <form id="messageForm" #messageForm (ngSubmit)="sendMessage(message)" novalidate class="mdc-card__actions mdc-elevation--z10">
+
+      <div class="mdc-card__action-buttons">
+        <div class="mdc-text-field mdc-text-field--fullwidth">
+          <input #message name="message" class="mdc-text-field__input" type="text" placeholder="Mensaje...">
+        </div>
+      </div>
+
+      <div class="mdc-card__action-icons">
+        <button type="submit" class="mdc-icon-button material-icons mdc-card__action mdc-card__action--icon">send</button>
+
+        <input id="mediaCapture" type="file" name="fileUpload" #fileUpload accept="image/*,capture=camera" (change)="saveImageMessage($event)">
+        <button type="button" (click)="fileUpload.click()" class="mdc-icon-button material-icons mdc-card__action mdc-card__action--icon">image</button>
+      </div>
+
+    </form>
+
+  </div>
+</main>
