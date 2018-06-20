@@ -3,7 +3,11 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AngularFireStorage } from 'angularfire2/storage';
 
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/database';
+import 'firebase/auth';
+import 'firebase/messaging';
+
 import { Observable } from 'rxjs';
 
 const LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
